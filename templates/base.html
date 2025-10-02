@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Блог{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 2.5em;
+        }
+        .nav {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .btn-success { background: #27ae60; }
+        .btn-secondary { background: #95a5a6; }
+        .btn-danger { background: #e74c3c; }
+        .journey {
+            border: 2px solid #ecf0f1;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        textarea { height: 200px; resize: vertical; }
+        .meta { color: #7f8c8d; font-size: 0.9em; margin: 10px 0; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1><a href="/">🌍 Блог </a></h1>
+        <div class="nav">
+            <a href="/" class="btn">🏠 Главная</a>
+            <a href="/create-journey" class="btn btn-success">➕ Добавить пост</a>
+            <a href="/users" class="btn btn-secondary">👥 Пользователи</a>
+            <a href="/api-info" class="btn btn-secondary">🔧 API</a>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

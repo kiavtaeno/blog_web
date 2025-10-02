@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать публицкацию</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .form-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .help-text {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .journey-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-header">
+        <h1>✏️ Редактировать публикацию</h1>
+        <p>Обновите информацию</p>
+    </div>
+
+    <div class="form-card">
+        {% if error %}
+        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #e74c3c;">
+            <strong>⚠️ Ошибка:</strong> {{ error }}
+        </div>
+        {% endif %}
+        <div class="journey-info">
+            <strong>Информация о записи:</strong><br>
+            Создано: {{ journey.createdAt.strftime('%d.%m.%Y в %H:%M') }}<br>
+            Последнее обновление: {{ journey.updatedAt.strftime('%d.%m.%Y в %H:%M') }}
+        </div>
+
+        <form action="/edit-journey/{{ journey.id }}" method="post">
+            <div class="form-group">
+                <label for="travelerId">👤 Пользователь:</label>
+                <select id="travelerId" name="travelerId" required>
+                    {% for traveler in travelers %}
+                    <option value="{{ traveler.id }}"
+                            {% if traveler.id == journey.travelerId %}selected{% endif %}>
+                        {{ traveler.username }} ({{ traveler.email }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <div class="help-text">Выберите автора </div>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">📍 Место:</label>
+                <input type="text" id="destination" name="destination"
+                       value="{{ journey.destination }}" required>
+                <div class="help-text">Название места, которое вы посетили</div>
+            </div>
+
+            <div class="form-group">
+                <label for="story">📖 Ваш рассказ:</label>
+                <textarea id="story" name="story" required>{{ journey.story }}</textarea>
+                <div class="help-text">Опишите ваши впечатления и опыт</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
+                <a href="/journeys/{{ journey.id }}" class="btn btn-secondary">❌ Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

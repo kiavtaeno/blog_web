@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API информация</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .header {
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .header h1 {
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+    .nav {
+        margin: 20px 0;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn {
+        background: #3498db;
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .btn-success { background: #27ae60; }
+    .btn-secondary { background: #95a5a6; }
+
+    .api-section {
+        margin: 30px 0;
+    }
+    .api-card {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid #3498db;
+    }
+    .api-title {
+        color: #2c3e50;
+        font-size: 1.4em;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .endpoint {
+        background: #2c3e50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .endpoint-method {
+        background: #e74c3c;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        margin-right: 10px;
+    }
+    .endpoint-method.get { background: #27ae60; }
+    .endpoint-method.post { background: #3498db; }
+    .endpoint-method.put { background: #f39c12; }
+    .endpoint-method.delete { background: #e74c3c; }
+    .test-btn {
+        background: #27ae60;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .data-preview {
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 15px;
+        border: 1px solid #e9ecef;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    .section-title {
+        color: #2c3e50;
+        margin: 30px 0 15px 0;
+        font-size: 1.5em;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🔧 API информация</h1>
+    <div class="nav">
+      <a href="/" class="btn">🏠 Главная</a>
+      <a href="/users" class="btn btn-success">👥 Управление пользователями</a>
+      <a href="/create-journey" class="btn btn-secondary">➕ Добавить историю</a>
+    </div>
+  </div>
+
+  <h2 class="section-title">📡 Доступные API endpoints</h2>
+
+  <!-- API для пользователей -->
+  <div class="api-section">
+    <div class="api-card">
+      <h3 class="api-title">👥 API пользователей (Travelers)</h3>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method get">GET</span>
+          <strong>/api/travelers/</strong> - Получить всех пользователей
+        </div>
+        <button class="test-btn" onclick="testEndpoint('/api/travelers/', 'GET')">Тест</button>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method get">GET</span>
+          <strong>/api/travelers/{id}</strong> - Получить пользователя по ID
+        </div>
+        <button class="test-btn" onclick="testEndpoint('/api/travelers/1', 'GET')">Тест</button>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method post">POST</span>
+          <strong>/api/travelers/</strong> - Создать нового пользователя
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method put">PUT</span>
+          <strong>/api/travelers/{id}</strong> - Обновить пользователя
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method delete">DELETE</span>
+          <strong>/api/travelers/{id}</strong> - Удалить пользователя
+        </div>
+      </div>
+
+      <div class="data-preview">
+        <strong>Текущие пользователи ({{ travelers|length }}):</strong>
+        <pre>{{ travelers|tojson(indent=2) }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="api-section">
+    <div class="api-card">
+      <h3 class="api-title">🌍 API постов (Journeys)</h3>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method get">GET</span>
+          <strong>/api/journeys/</strong> - Получить все посты
+        </div>
+        <button class="test-btn" onclick="testEndpoint('/api/journeys/', 'GET')">Тест</button>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method get">GET</span>
+          <strong>/api/journeys/{id}</strong> - Получить посты по ID
+        </div>
+        <button class="test-btn" onclick="testEndpoint('/api/journeys/1', 'GET')">Тест</button>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method post">POST</span>
+          <strong>/api/journeys/</strong> - Создать новый пост
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method put">PUT</span>
+          <strong>/api/journeys/{id}</strong> - Обновить пост
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div>
+          <span class="endpoint-method delete">DELETE</span>
+          <strong>/api/journeys/{id}</strong> - Удалить пост
+        </div>
+      </div>
+
+      <div class="data-preview">
+        <strong>Текущие посты ({{ journeys|length }}):</strong>
+        <pre>{{ journeys|tojson(indent=2) }}</pre>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  async function testEndpoint(url, method) {
+      try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          alert(`Ответ от ${url}:\n\n${JSON.stringify(data, null, 2)}`);
+      } catch (error) {
+          alert(`Ошибка при запросе ${url}:\n\n${error.message}`);
+      }
+  }
+</script>
+</body>
+</html>

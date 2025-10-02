@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .journeys-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .journey-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .journey-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        .journey-destination {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        .journey-story {
+            color: #5d6d7e;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .journey-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ecf0f1;
+        }
+        .traveler-info {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .journey-date {
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+        .journey-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .empty-state h3 {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Лучший блог</h1>
+        <p>Делитесь своими историями инаходите новые знакомства</p>
+
+        <div class="actions">
+            <a href="/create-journey" class="btn btn-primary">➕ Добавить историю</a>
+            <a href="/users" class="btn btn-secondary">👥 Управление пользователями</a>
+        </div>
+    </div>
+
+    {% if journeys %}
+    <div class="journeys-grid">
+        {% for item in journeys %}
+        <div class="journey-card">
+            <h2 class="journey-destination">📍 {{ item.journey.destination }}</h2>
+            <p class="journey-story">
+                {{ item.journey.story[:150] }}{% if item.journey.story|length > 150 %}...{% endif %}
+            </p>
+
+            <div class="journey-meta">
+                <div>
+                    <div class="traveler-info">👤 {{ item.traveler.username if item.traveler else 'Неизвестный пользователь' }}</div>
+                    <div class="journey-date">📅 {{ item.journey.createdAt.strftime('%d.%m.%Y %H:%M') }}</div>
+                </div>
+            </div>
+
+            <div class="journey-actions">
+                <a href="/journeys/{{ item.journey.id }}" class="btn btn-primary btn-small">📖 Читать</a>
+                <a href="/edit-journey/{{ item.journey.id }}" class="btn btn-success btn-small">✏️ Редактировать</a>
+                <form action="/delete-journey/{{ item.journey.id }}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger btn-small"
+                            onclick="return confirm('Удалить этот пост?')">🗑️ Удалить</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h3> Пока нет никаких записей</h3>
+        <p>Будьте первым, кто поделится своими историями!</p>
+        <a href="/create-journey" class="btn btn-primary" style="margin-top: 20px;">➕ Создать первый пост</a>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "travelers": [
+    {
+      "id": 1,
+      "email": "wanderer@travel.com",
+      "username": "Челик",
+      "password": "wander123",
+      "createdAt": "2025-10-02 22:15:49.978323",
+      "updatedAt": "2025-10-02 22:15:49.978330"
+    },
+    {
+      "id": 2,
+      "email": "katusha@mail.ge",
+      "username": "pupa",
+      "password": "1234567",
+      "createdAt": "2025-10-02 22:57:58.488039",
+      "updatedAt": "2025-10-02 22:57:58.488044"
+    },
+    {
+      "id": 3,
+      "email": "lol@gmail.re",
+      "username": "hcxhn",
+      "password": "12356789",
+      "createdAt": "2025-10-02 23:23:00.547517",
+      "updatedAt": "2025-10-02 23:23:00.547523"
+    }
+  ],
+  "journeys": [
+    {
+      "id": 3,
+      "travelerId": 2,
+      "destination": "ывраонлгдшжщз",
+      "story": "уцкеноглшдщжзбоьпрап",
+      "createdAt": "2025-10-02 23:30:14.501925",
+      "updatedAt": "2025-10-02 23:30:14.501930"
+    },
+    {
+      "id": 4,
+      "travelerId": 1,
+      "destination": "москва",
+      "story": "ваппрорлвапарол",
+      "createdAt": "2025-10-02 23:39:57.703104",
+      "updatedAt": "2025-10-02 23:39:57.703109"
+    }
+  ],
+  "next_traveler_id": 4,
+  "next_journey_id": 5
+}
