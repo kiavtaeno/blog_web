@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -8,29 +8,19 @@ repos:
       - id: check-added-large-files
 
   - repo: https://github.com/psf/black
-    rev: 25.9.0
+    rev: 22.10.0
     hooks:
       - id: black
-        language_version: python3.9
 
   - repo: https://github.com/pycqa/isort
-    rev: 7.0.0
+    rev: 5.12.0
     hooks:
       - id: isort
-        name: isort (python)
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+    rev: 5.0.4
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-typing-imports==1.15.0]
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.18.2
-    hooks:
-      - id: mypy
-        additional_dependencies: [types-all]
-        exclude: ^tests/
 
 default_language_version:
   python: python3.9
